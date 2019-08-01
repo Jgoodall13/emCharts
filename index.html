@@ -1,44 +1,131 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>DoorDash Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- STYLES -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/popper.min.js" integrity="sha256-1XfFQxRfNvDJW3FdZ+xlo2SbodG2+rFArw6XsVzu3bc=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha256-CjSoeELFOcH0/uxWu6mC/Vlrc1AARqbm/jiiImDGV3s=" crossorigin="anonymous"></script>
-    
+    <!-- 3rd Party Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/popper.min.js" integrity="sha256-1XfFQxRfNvDJW3FdZ+xlo2SbodG2+rFArw6XsVzu3bc="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha256-CjSoeELFOcH0/uxWu6mC/Vlrc1AARqbm/jiiImDGV3s="
+        crossorigin="anonymous"></script>
+
+    <!-- AmCharts dependencies -->
     <script src="https://www.amcharts.com/lib/4/core.js"></script>
     <script src="https://www.amcharts.com/lib/4/charts.js"></script>
     <script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
     <script src="//www.amcharts.com/lib/4/themes/animated.js"></script>
+    <!-- <script src="//www.amcharts.com/lib/4/themes/kelly.js"></script> -->
     <script src="https://www.amcharts.com/lib/4/lang/de_DE.js"></script>
     <script src="https://www.amcharts.com/lib/4/geodata/germanyLow.js"></script>
-    <script src="test.js"></script>
+
+    <!-- My local Scripts -->
+    <script src="data.js"></script>
+    <script src="functions.js"></script>
+    <script src="pieAjax.js"></script>
+    <script src="barAjax.js"></script>
+    <script src="main.js"></script>
 
 </head>
-<body>
-    <h1>Doing Stuff.</h1>
 
-    <div class='pie-div'>
-        <form class='pie-form'>
-            <div class="form-group">
-                <label for="pickerStart">Start Date</label>
-                <input type="date" id="pickerStart" class="form-control">
+<body>
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col col-xs-6 header-left">
+                    <a href="/">
+                        <p>DoorDash Dashboard</p>
+                    </a>
+                </div>
+                <div class="col col-xs-6">
+                    
+                </div>
             </div>
-            <div class="form-group">
-                <label for="pickerEnd">End Date</label>
-                <input type="date" id="pickerEnd" class="form-control">
+        </div>
+    </header>
+    <div class='body-space'></div>
+
+    <div class='pie-div container'>
+        <h2>Pie Chart</h2>
+        <div class="row">
+            <form class='pie-form col col-sm-3'>
+                <div class="form-group">
+                    <label for="pickerStartPie">Start Date</label>
+                    <input type="date" id="pickerStartPie" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="pickerEndPie">End Date</label>
+                    <input type="date" id="pickerEndPie" class="form-control">
+                </div>
+                <button id='pieSubmit' class="btn btn-primary">Submit</button>
+            </form>
+            <div id="chartdiv" class="col col-sm-9">
             </div>
-            <button id='pieSubmit' class="btn btn-primary">Submit</button>
-        </form>
-        <div id="chartdiv" style="width: 100%; height: 400px;"></div>
+        </div>
     </div>
 
+    <div class="bar-div container">
+        <h2>Bar Chart</h2>
+        <div class='row'>
+            <form class='pie-form col col-md-3'>
+                <div class="form-group">
+                    <label for="pickerStartBar">Start Date</label>
+                    <input type="date" id="pickerStartBar" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="pickerEndBar">End Date</label>
+                    <input type="date" id="pickerEndBar" class="form-control">
+                </div>
+                <div>
+                    <label for="">Program</label>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="barProgram">Options</label>
+                    </div>
+                    <select class="custom-select" id="barProgram">
+                        <option selected>All</option>
+                        <option value="DDAUS">DoorDash Australia</option>
+                        <option value="DDCAN">DoorDash Canada</option>
+                        <option value="DDBX">DoorDash Merchant</option>
+                        <option value="DDCARD">DoorDash Red Cards</option>
+                        <option value="DDCC">DoorDash Credit Card</option>
+                        <option value="DDDB">DoorDash Direct Bill</option>
+                        <option value="DDK">DoorDash Kits</option>
+                        <option value="DDH">DoorDash Inventory</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="">Purchaser</label>
+                </div>
+                <div class='bar-radios'>
+                    <div>
+                        <input id='radio-merch' type="radio" name="purchaser" value="merchant">
+                        <label for="radio-merch">Merchant</label>
+                    </div>
+                    <div>
+                        <input id='radio-dash' type="radio" name="purchaser" value="dasher">
+                        <label for="radio-dash">Dasher</label>
+                    </div>
+                    <a href="#" id="clear-button" class='btn btn-danger'>Clear</a>
+                </div>
+                <button id='barSubmit' class="btn btn-primary">Submit</button>
+            </form>
+            <div id="barchartdiv" class="col col-md-9" style='height: 500px'></div>
+        </div>
+    </div>
+
+
 </body>
+
 </html>
